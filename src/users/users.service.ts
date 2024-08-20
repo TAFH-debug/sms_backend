@@ -1,32 +1,44 @@
 import { Injectable } from '@nestjs/common';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UsersRepository } from './users.repository';
 
 @Injectable()
 export class UsersService {
 
+  constructor(
+    private usersRepository: UsersRepository
+  ) {}
+
   create(createUser: CreateUserDto, hashed_password: string) {
-    return `This action adds a new user ${createUser.username} ${hashed_password}`;
+    return this.usersRepository.create(createUser, hashed_password);
   }
 
   findAll() {
-    return `This action returns all users`;
+    return this.usersRepository.findAll();
   }
 
   findOne(id: string) {
-    return `This action returns a #${id} user`;
+    return this.usersRepository.findOne(id);
   }
 
-  findOneByUsername(username: string): User {
-    return { id: '1', username: username, email: 'aushahman2007@gmail.com', hashed_password: '1712sgs1gs7812' };
+  findOneByUsername(username: string) {
+    return this.usersRepository.findOneByUsername(username);
+  }
+
+  findOneById(id: string) {
+    return this.usersRepository.findOneById(id);
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user ${updateUserDto.username}`;
+    return this.usersRepository.update(id, updateUserDto);
+  }
+
+  addRole(userId: string, roleId: string) {
+    return this.usersRepository.addRole(userId, roleId);
   }
 
   remove(id: string) {
-    return `This action removes a #${id} user`;
+    return this.usersRepository.remove(id);
   }
 }

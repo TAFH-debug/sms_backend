@@ -3,4 +3,5 @@ export class User {
     email: string;
     id: string;
     hashed_password: string;
+    roleIDs: string[];
 }
