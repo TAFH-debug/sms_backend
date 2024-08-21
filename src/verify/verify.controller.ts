@@ -1,6 +1,7 @@
-import { Controller, Get, Patch, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { VerifyService } from './verify.service';
 import { JwtGuard } from 'src/auth/auth.guard';
+import { VerifyDto } from './dto/verify.dto';
 
 @Controller('verify')
 @UseGuards(JwtGuard)
@@ -12,8 +13,8 @@ export class VerifyController {
         return this.verifyService.getToken(req['user'].id);
     }
 
-    @Patch()
-    async verify(@Query('token') token: string) {
-        return this.verifyService.verify(token);
+    @Post()
+    async verify(@Body() verifyDto: VerifyDto) {
+        return this.verifyService.verify(verifyDto.token);
     }
 }

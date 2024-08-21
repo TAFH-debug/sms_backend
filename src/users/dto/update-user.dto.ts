@@ -1,5 +1,6 @@
 export class UpdateUserDto {
     username?: string;
-    email?: string;
-    isVerified?: boolean;
+    email?: string; // TODO: Add email verification check.
+    surname?: string;
+    name?: string;
 }

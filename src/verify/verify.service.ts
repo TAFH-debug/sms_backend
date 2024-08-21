@@ -32,7 +32,7 @@ export class VerifyService {
 
     async verify(token: string) {
         const payload = this.jwtService.verify(token);
-        return this.userService.update(payload.id, { isVerified: true });
+        return this.userService.verify(payload.id);
     }
 
     async sendEmail(token: string, email: string) {
@@ -40,7 +40,7 @@ export class VerifyService {
             from: `"${process.env.EMAIL_FROM_NAME}" <${process.env.EMAIL}>`,
             to: `${email}`,
             subject: "Verification email from SMS",
-            html: `<b>Your verification link is ${process.env.IP_ADDRESS + "verify?token=" + token}</b>`,
+            html: `<b>Your verification link is ${process.env.IP_ADDRESS + "/verify?token=" + token}</b>`,
         });
         
         console.log("Message sent: %s", info.messageId);
