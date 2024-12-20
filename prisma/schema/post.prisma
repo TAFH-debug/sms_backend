@@ -1,0 +1,25 @@
+model Post {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    content     String
+
+    authorID    String @db.ObjectId
+    author      User @relation(name: "PostToUser", fields: [authorID], references: [id])
+
+    likedUsersIDs  String[] @db.ObjectId
+    likedUsers  User[] @relation(name: "PostToLikedUsers", fields: [likedUsersIDs], references: [id])
+
+    comments    Comment[]
+    
+    createdAt   DateTime @default(now())
+}
+
+model Comment {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    content     String
+    
+    authorID    String @db.ObjectId
+    author      User @relation(fields: [authorID], references: [id])
+
+    postID      String @db.ObjectId
+    post        Post @relation(fields: [postID], references: [id])
+}

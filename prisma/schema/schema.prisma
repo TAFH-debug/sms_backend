@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {
@@ -23,12 +24,23 @@ model User {
   name            String   @default("John")
   surname         String   @default("Doe")
   about           String   @default("No description")
+
   roleIDs         String[] @default([]) @db.ObjectId
   roles           Role[]   @relation(fields: [roleIDs], references: [id])
+
   clubIDs         String[] @default([]) @db.ObjectId
   clubs           Club[]   @relation(fields: [clubIDs], references: [id])
+
+  comments        Comment[]
+ 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+
+  postIDs         String[] @default([]) @db.ObjectId
+  posts           Post[]   @relation(name: "PostToUser")
+
+  likedPostIDs    String[] @default([]) @db.ObjectId
+  likedPosts      Post[]   @relation(name: "PostToLikedUsers", fields: [likedPostIDs], references: [id])
 }
 
 model Role {
