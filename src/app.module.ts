@@ -9,11 +9,12 @@ import { PrismaModule } from './prisma/prisma.module';
 import { VerifyModule } from './verify/verify.module';
 import { RoleModule } from './role/role.module';
 import { AnnouncementsModule } from './announcements/announcements.module';
+import { ClubsModule } from './clubs/clubs.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true
-  }), UsersModule, AuthModule, PrismaModule, VerifyModule, RoleModule, AnnouncementsModule],
+  }), UsersModule, AuthModule, PrismaModule, VerifyModule, RoleModule, AnnouncementsModule, ClubsModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

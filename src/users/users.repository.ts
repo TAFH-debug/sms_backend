@@ -18,6 +18,9 @@ export class UsersRepository {
     return this.prismaService.user.findFirst({
       where: {
         id: id
+      },
+      include: {
+        roles: true
       }
     });
   }
@@ -26,14 +29,6 @@ export class UsersRepository {
     return this.prismaService.user.findUnique({
       where: {
         username: username
-      }
-    });
-  }
-
-  findOneByID(id: string) {
-    return this.prismaService.user.findUnique({
-      where: {
-        id: id
       },
       include: {
         roles: true
@@ -102,7 +97,10 @@ export class UsersRepository {
   create(createUser: RegisterUserDto, hashed_password: string) {
     return this.prismaService.user.create({
       data: {
-        ...createUser,
+        email: createUser.email,
+        name: createUser.name,
+        surname: createUser.surname,
+        username: createUser.username,
         hashed_password
       }
     });

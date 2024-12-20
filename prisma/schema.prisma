@@ -14,28 +14,46 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  email    String   @unique
-  username String   @unique
-  isVerified Boolean @default(false)
-  hashed_password String 
-  name String @default("John")
-  surname String @default("Doe")
-  roleIDs String[] @db.ObjectId @default([])
-  roles Role[] @relation(fields: [roleIDs], references: [id])
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  avatar_url      String   @default("https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg")
+  email           String   @unique
+  username        String   @unique
+  isVerified      Boolean  @default(false)
+  hashed_password String
+  name            String   @default("John")
+  surname         String   @default("Doe")
+  about           String   @default("No description")
+  roleIDs         String[] @default([]) @db.ObjectId
+  roles           Role[]   @relation(fields: [roleIDs], references: [id])
+  clubIDs         String[] @default([]) @db.ObjectId
+  clubs           Club[]   @relation(fields: [clubIDs], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model Role {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  name     String   @unique
-  color    String   @default("#fff")
-  userIDs  String[] @db.ObjectId
-  users    User[]   @relation(fields: [userIDs], references: [id])
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String       @unique
+  color       String       @default("#fff")
+  userIDs     String[]     @db.ObjectId
+  users       User[]       @relation(fields: [userIDs], references: [id])
+  permissions String[]
+}
+
+model Club {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userIDs         String[] @db.ObjectId
+  users           User[]   @relation(fields: [userIDs], references: [id])
+  name            String
+  description     String
+  form_url        String
+  logo_url        String
 }
 
 model Announcement {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  content String
-  userID String @db.ObjectId
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  content         String
+  author          String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

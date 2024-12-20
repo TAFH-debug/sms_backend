@@ -3,4 +3,5 @@ export class UpdateUserDto {
     email?: string; // TODO: Add email verification check.
     surname?: string;
     name?: string;
+    about?: string;
 }

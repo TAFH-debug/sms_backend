@@ -1,27 +1,32 @@
-import { Controller, Get, Body, Patch, Param, Delete, UseGuards, Put } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Delete, UseGuards, Put, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { JwtGuard } from 'src/auth/auth.guard';
+import { JwtGuard, Public } from 'src/auth/auth.guard';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RoleIDDto } from './dto/role-id.dto';
+import { RequirePermissions } from 'src/permissions/permissions.decorator';
+import { Permissions } from 'src/permissions/permissions.enum';
+import { PermissionsGuard } from 'src/permissions/permissions.guard';
 
 @Controller('users')
-@UseGuards(JwtGuard)
+@UseGuards(JwtGuard, PermissionsGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  // @Get()
-  // findAll() {
-  //   return this.usersService.findAll();
-  // }
+  @Get('/me')
+  me(@Req() req: Request) {
+    return req['user'];
+  }
 
-  // @Get('/me')
-  // me(@Req() req: Request) {
-  //   return this.usersService.findOneById(req['user'].id);
-  // }
-
+  @RequirePermissions(Permissions.ADMIN)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
+  }
+  
+  @Public()
+  @Get('/username/:username')
+  findOneByUsername(@Param('username') username: string) {
+    return this.usersService.findOneByUsername(username);
   }
 
   @Patch(':id')

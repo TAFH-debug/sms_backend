@@ -1,5 +1,8 @@
+import { IsNotEmpty } from "class-validator"
+
 export class CreateAnnouncementDto {
-    title: string
+    @IsNotEmpty()
     content: string
-    userID: string
+    @IsNotEmpty()
+    author: string
 }
