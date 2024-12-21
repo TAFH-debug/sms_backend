@@ -9,8 +9,12 @@ export class PostsService {
 
   create(createPostDto: CreatePostDto) {
     return this.prismaService.post.create({
-      data: createPostDto,
-      author: { connect: { id: createPostDto.authorId } }
+      data: {
+        content: createPostDto.content,
+        author: {
+          connect: { id: createPostDto.authorId },
+        }
+      },
     });
   }
 
@@ -20,20 +24,20 @@ export class PostsService {
 
   findOne(id: string) {
     return this.prismaService.post.findUnique({
-      where: { id }
+      where: { id },
     });
   }
 
   update(id: string, updatePostDto: UpdatePostDto) {
     return this.prismaService.post.update({
       where: { id },
-      data: updatePostDto
+      data: updatePostDto,
     });
   }
 
   remove(id: string) {
     return this.prismaService.post.delete({
-      where: { id }
+      where: { id },
     });
   }
 }

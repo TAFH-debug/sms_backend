@@ -5,7 +5,7 @@ model Post {
     authorID    String @db.ObjectId
     author      User @relation(name: "PostToUser", fields: [authorID], references: [id])
 
-    likedUsersIDs  String[] @db.ObjectId
+    likedUsersIDs  String[] @default([]) @db.ObjectId
     likedUsers  User[] @relation(name: "PostToLikedUsers", fields: [likedUsersIDs], references: [id])
 
     comments    Comment[]

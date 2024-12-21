@@ -11,12 +11,14 @@ import { RoleModule } from './role/role.module';
 import { AnnouncementsModule } from './announcements/announcements.module';
 import { ClubsModule } from './clubs/clubs.module';
 import { PostsModule } from './posts/posts.module';
+import { CommentsService } from './comments/comments.service';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true
-  }), UsersModule, AuthModule, PrismaModule, VerifyModule, RoleModule, AnnouncementsModule, ClubsModule, PostsModule],
+  }), UsersModule, AuthModule, PrismaModule, VerifyModule, RoleModule, AnnouncementsModule, ClubsModule, PostsModule, CommentsModule],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService, PrismaService, CommentsService],
 })
 export class AppModule {}
