@@ -19,7 +19,11 @@ export class PostsService {
   }
 
   findAll() {
-    return this.prismaService.post.findMany();
+    return this.prismaService.post.findMany({
+      include: {
+        author: true
+      }
+    });
   }
 
   findOne(id: string) {

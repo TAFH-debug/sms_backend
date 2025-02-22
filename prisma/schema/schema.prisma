@@ -16,7 +16,7 @@ datasource db {
 
 model User {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  avatar_url      String   @default("https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg")
+  avatar_url      String   @default("https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/665786b8a93285bff36e194e_discord-mark-white%202.webp")
   email           String   @unique
   username        String   @unique
   isVerified      Boolean  @default(false)

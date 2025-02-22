@@ -16,34 +16,43 @@ export class UsersController {
   me(@Req() req: Request) {
     return req['user'];
   }
+  
+  @Patch('/me')
+  updateMe(@Req() req: Request, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(req['user'].id, updateUserDto);
+  }
+
+  @Public()
+  @Get('/:username')
+  findOneByUsername(@Param('username') username: string) {
+    return this.usersService.findOneByUsername(username);
+  }
 
   @RequirePermissions(Permissions.ADMIN)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
-  
-  @Public()
-  @Get('/username/:username')
-  findOneByUsername(@Param('username') username: string) {
-    return this.usersService.findOneByUsername(username);
-  }
 
+  @RequirePermissions(Permissions.ADMIN)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
 
+  @RequirePermissions(Permissions.ADMIN)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
 
+  @RequirePermissions(Permissions.ADMIN)
   @Put(':id/roles')
   addRole(@Param('id') id: string, @Body() roleIDDto: RoleIDDto) {
     return this.usersService.addRole(id, roleIDDto.id);
   }
 
+  @RequirePermissions(Permissions.ADMIN)
   @Delete(':id/roles')
   deleteRole(@Param('id') id: string, @Body() roleIDDto: RoleIDDto) {
     return this.usersService.deleteRole(id, roleIDDto.id);
