@@ -101,6 +101,7 @@ export class UsersRepository {
         name: createUser.name,
         surname: createUser.surname,
         username: createUser.username,
+        firebaseId: createUser.firebaseId,
         hashed_password
       }
     });

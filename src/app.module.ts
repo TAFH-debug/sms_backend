@@ -13,11 +13,12 @@ import { ClubsModule } from './clubs/clubs.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsService } from './comments/comments.service';
 import { CommentsModule } from './comments/comments.module';
+import { ChannelsModule } from './channels/channels.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true
-  }), UsersModule, AuthModule, PrismaModule, VerifyModule, RoleModule, AnnouncementsModule, ClubsModule, PostsModule, CommentsModule],
+  }), UsersModule, AuthModule, PrismaModule, VerifyModule, RoleModule, AnnouncementsModule, ClubsModule, PostsModule, CommentsModule, ChannelsModule],
   controllers: [AppController],
   providers: [AppService, PrismaService, CommentsService],
 })

@@ -1,0 +1,10 @@
+model Channel {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
+    path        String
+    
+    createdAt   DateTime @default(now())
+
+    userIDs     String[] @default([]) @db.ObjectId
+    users       User[] @relation(name: "ChannelToUsers", fields: [userIDs], references: [id])
+}

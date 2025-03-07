@@ -14,7 +14,7 @@ export class UsersController {
 
   @Get('/me')
   me(@Req() req: Request) {
-    return req['user'];
+    return this.usersService.findOne(req['user'].id);
   }
   
   @Patch('/me')
@@ -46,7 +46,6 @@ export class UsersController {
     return this.usersService.remove(id);
   }
 
-  @RequirePermissions(Permissions.ADMIN)
   @Put(':id/roles')
   addRole(@Param('id') id: string, @Body() roleIDDto: RoleIDDto) {
     return this.usersService.addRole(id, roleIDDto.id);

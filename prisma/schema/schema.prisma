@@ -16,6 +16,7 @@ datasource db {
 
 model User {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  firebaseId      String   @unique
   avatar_url      String   @default("https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/665786b8a93285bff36e194e_discord-mark-white%202.webp")
   email           String   @unique
   username        String   @unique
@@ -41,6 +42,9 @@ model User {
 
   likedPostIDs    String[] @default([]) @db.ObjectId
   likedPosts      Post[]   @relation(name: "PostToLikedUsers", fields: [likedPostIDs], references: [id])
+
+  channelIDs      String[] @default([]) @db.ObjectId
+  channels        Channel[] @relation(name: "ChannelToUsers", fields: [channelIDs], references: [id])
 }
 
 model Role {
